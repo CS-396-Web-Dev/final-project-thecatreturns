@@ -1,5 +1,5 @@
 import { Status } from '../types';
-  
+
 interface StatusBarProps {
   label: string;
   value: number;
@@ -7,12 +7,18 @@ interface StatusBarProps {
 }
 
 function StatusBar({ label, value, color }: StatusBarProps) {
+  const bgColors = {
+    green: 'bg-green-400',
+    yellow: 'bg-yellow-400',
+    red: 'bg-red-400'
+  };
+
   return (
     <div className="space-y-2">
       <label className="block text-sm font-medium">{label}</label>
       <div className="h-2 bg-gray-200 rounded">
         <div 
-          className={`h-full bg-${color}-400 rounded`}
+          className={`h-full ${bgColors[color]} rounded`}
           style={{ width: `${value}%` }}
         />
       </div>
