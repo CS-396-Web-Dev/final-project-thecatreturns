@@ -1,9 +1,10 @@
-import { Status } from '../types';
+import React from 'react';
+import { useCatContext } from '../provider';
 
-interface StatusBarProps {
+export interface StatusBarProps {
   label: string;
   value: number;
-  color: string;
+  color: 'green' | 'yellow' | 'red';
 }
 
 function StatusBar({ label, value, color }: StatusBarProps) {
@@ -26,12 +27,11 @@ function StatusBar({ label, value, color }: StatusBarProps) {
   );
 }
 
-interface StatusBarsProps {
-  status: Status;
-}
+export function StatusBars() {
+   // use global cat context 
+  const { status } = useCatContext();
 
-export function StatusBars({ status }: StatusBarsProps) {
-  const bars = [
+  const bars: StatusBarProps[] = [
     { label: 'Hunger', value: status.hunger, color: 'green' },
     { label: 'Weight', value: status.weight, color: 'yellow' },
     { label: 'Anger', value: status.anger, color: 'red' }
