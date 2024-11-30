@@ -4,7 +4,7 @@ import { useCatContext } from '../provider';
 export interface StatusBarProps {
   label: string;
   value: number;
-  color: string;
+  color: 'green' | 'yellow' | 'red';
 }
 
 function StatusBar({ label, value, color }: StatusBarProps) {
@@ -31,7 +31,7 @@ export function StatusBars() {
    // use global cat context 
   const { status } = useCatContext();
 
-  const bars = [
+  const bars: StatusBarProps[] = [
     { label: 'Hunger', value: status.hunger, color: 'green' },
     { label: 'Weight', value: status.weight, color: 'yellow' },
     { label: 'Anger', value: status.anger, color: 'red' }

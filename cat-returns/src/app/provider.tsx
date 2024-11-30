@@ -5,6 +5,7 @@ import { Status } from './types';
 //set up cat context
 interface CatContextType {
   status: Status;
+  stage: String;
   onAction: (action: string) => void;
 }
 
@@ -17,6 +18,7 @@ export function CatProvider({ children }: { children: ReactNode }) {
     weight: 50,
     anger: 50
   });
+  const [stage, setStage] = useState("kitten");
 
   // function for each action (clicking button)
   const onAction = (action: string) => {
@@ -42,6 +44,35 @@ export function CatProvider({ children }: { children: ReactNode }) {
     });
   };
 
+   // TODO: we can check if this is how we want growth stage to work exactly
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextStage = (() => {
+        switch(stage) {
+          case "kitten":
+            return status.hunger == 100 && "adolescent";
+          
+          case "adolescent":
+            return status.hunger === 100 
+              ? (status.weight >= 70 ? "buffFat" : "fat")
+              : null;
+          
+          case "fat":
+          case "buffFat":
+            return status.hunger === 100 
+              ? (status.anger >= 70 ? "crankyOld" : "old")
+              : null;
+        }
+      })();
+  
+      if (nextStage) {
+        setStage(nextStage);
+        setStatus({ hunger: 50, weight: 50, anger: 50 });
+      }
+    });
+    return () => clearInterval(interval);
+  }, [stage, status]);
+
   // optional? so ur cat gets hungry/angry and skinnier if u dont interact
   useEffect(() => {
     const interval = setInterval(() => {
@@ -55,7 +86,7 @@ export function CatProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <CatContext.Provider value={{ status, onAction }}>
+    <CatContext.Provider value={{ status, stage, onAction }}>
       {children}
     </CatContext.Provider>
   );

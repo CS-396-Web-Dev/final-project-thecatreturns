@@ -1,6 +1,9 @@
 import Image from 'next/image';
+import { useCatContext } from '../provider';
 
 export function CatImage() {
+  const {stage} = useCatContext();
+  
     return (
       <div className="bg-red-50 rounded-lg p-4">
         <Image 
@@ -11,6 +14,7 @@ export function CatImage() {
           height={400}
           className="w-full h-auto rounded-lg"
         />
+        <h2>{stage}</h2>
       </div>
     );
   }
