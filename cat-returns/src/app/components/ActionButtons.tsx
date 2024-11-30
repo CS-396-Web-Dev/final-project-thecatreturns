@@ -2,6 +2,7 @@ import React from "react";
 import { useCatContext } from "../provider";
 
 export function ActionButtons() {
+  // use global cat context 
   const { onAction } = useCatContext();
 
   const buttonStyles = {

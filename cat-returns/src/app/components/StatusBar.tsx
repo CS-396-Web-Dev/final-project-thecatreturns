@@ -1,6 +1,11 @@
 import React from 'react';
 import { useCatContext } from '../provider';
-import { StatusBarProps } from '../types';
+
+export interface StatusBarProps {
+  label: string;
+  value: number;
+  color: string;
+}
 
 function StatusBar({ label, value, color }: StatusBarProps) {
   const bgColors = {

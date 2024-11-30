@@ -1,5 +1,5 @@
 "use client"
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { useEffect, createContext, useState, useContext, ReactNode } from 'react';
 import { Status } from './types';
 
 //set up cat context
@@ -41,6 +41,18 @@ export function CatProvider({ children }: { children: ReactNode }) {
       return newStatus;
     });
   };
+
+  // optional? so ur cat gets hungry/angry and skinnier if u dont interact
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStatus(prev => ({
+        hunger: Math.max(0, prev.hunger - 1),
+        weight: Math.max(0, prev.weight - 1),
+        anger: Math.min(100, prev.anger + 1)
+      }));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <CatContext.Provider value={{ status, onAction }}>

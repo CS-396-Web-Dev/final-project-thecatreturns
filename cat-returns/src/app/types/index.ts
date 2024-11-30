@@ -3,9 +3,3 @@ export interface Status {
     weight: number;
     anger: number;
   }
-
-export interface StatusBarProps {
-  label: string;
-  value: number;
-  color: string;
-}
