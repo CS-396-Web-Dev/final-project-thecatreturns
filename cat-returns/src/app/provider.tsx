@@ -5,7 +5,7 @@ import { Status } from './types';
 //set up cat context
 interface CatContextType {
   status: Status;
-  stage: String;
+  stage: string;
   onAction: (action: string) => void;
 }
 
