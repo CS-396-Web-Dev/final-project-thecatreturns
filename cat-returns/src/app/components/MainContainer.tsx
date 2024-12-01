@@ -10,12 +10,22 @@ import { CatProvider } from '../provider';
 export function MainContainer() {
   return (
     <CatProvider>
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <StatusBars />
+      <div className="flex flex-col items-center justify-center h-screen overflow-hidden">
+        <div className="relative flex flex-col items-center bg-red-100 w-[100%] h-[70%] p-8"
+          style={{
+            borderRadius: '45% 45% 50% 50% / 65% 65% 35% 35%',
+          }}>
+          <div className="flex-grow flex flex-col items-center justify-center">
+            <CatImage />
+            <div className="w-full mt-8">
+              <StatusBars />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8">
           <ActionButtons />
         </div>
-        <CatImage />
       </div>
     </CatProvider>
   );
