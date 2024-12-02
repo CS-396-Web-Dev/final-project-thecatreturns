@@ -39,7 +39,7 @@ export function StatusBars() {
   const { status } = useCatContext();
 
   const bars: StatusBarProps[] = [
-    { label: 'Hunger', value: status.hunger, color: 'green' },
+    { label: 'Belly-Satisfied', value: status.hunger, color: 'green' },
     { label: 'Weight', value: status.weight, color: 'yellow' },
     { label: 'Anger', value: status.anger, color: 'red' }
   ];
