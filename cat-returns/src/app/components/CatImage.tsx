@@ -14,15 +14,22 @@ export function CatImage() {
   const {stage} = useCatContext() as { stage: keyof typeof stageImages };
   
     return (
-      <div className="flex flex-col items-center bg-red-50 rounded-lg p-2">
+      <div 
+        className="flex flex-col items-center bg-red-50 rounded-lg p-2"
+        role="figure"
+        aria-labelledby='cat-stage'>
         <Image 
           src={stageImages[stage]} 
-          alt={stage} 
+          alt={`${stage} cat`} 
           width={250}
           height={250}
           className="rounded-lg object-contain"
         />
-        <h2 className="text-md font-semibold text-gray-700 mt-2 capitalize text-center">{stage}</h2>
+        <h2 
+          id='cat-stage'
+          className="text-md font-semibold mt-2 capitalize text-center"
+          role='caption'
+        >{stage}</h2>
       </div>
     );
   }

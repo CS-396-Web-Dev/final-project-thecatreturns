@@ -14,12 +14,16 @@ export function ActionButtons() {
   const actions = ['eat', 'pull whisker', 'exercise'] as const;
 
   return (
-    <div className="grid grid-cols-3 gap-3 pt-4 p-4 rounded-lg">
+    <div 
+      className="grid grid-cols-3 gap-3 pt-4 p-4 rounded-lg"
+      role="group"
+      aria-label="Action buttons">
     {actions.map(action => (
       <button
         key={action}
         onClick={() => onAction(action)}
         className={`${buttonStyles[action]} px-4 py-2 rounded transition`}
+        aria-label={`perform ${action}`}
       >
         {action}
       </button>
