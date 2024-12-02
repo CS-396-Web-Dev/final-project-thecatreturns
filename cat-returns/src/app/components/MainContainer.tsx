@@ -34,7 +34,7 @@ export function MainContainer() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center space-y-4" role='region' aria-label='action buttons area'>
+        <div className="my-4 flex flex-col items-center space-y-4" role='region' aria-label='action buttons area'>
           <ActionButtons />
         </div>
       </div>
