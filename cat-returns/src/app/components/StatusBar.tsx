@@ -15,9 +15,16 @@ function StatusBar({ label, value, color }: StatusBarProps) {
   };
 
   return (
-    <div className="space-y-2">
-      <label className="block text-sm font-medium">{label}</label>
-      <div className="h-2 bg-gray-200 rounded">
+    <div className="space-y-2" role='region' aria-labelledby={`${label}-status`}>
+      <label 
+        id={`${label}-status`}
+        className="block text-sm font-medium">{label}</label>
+      <div 
+        className="h-2 bg-gray-200 rounded" 
+        role='progressbar'
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={value}>
         <div 
           className={`h-full ${bgColors[color]} rounded`}
           style={{ width: `${value}%` }}
@@ -38,7 +45,7 @@ export function StatusBars() {
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" role='region' aria-label='Status bars'>
       {bars.map(bar => (
         <StatusBar key={bar.label} {...bar} />
       ))}
