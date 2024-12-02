@@ -1,4 +1,3 @@
-"use client"
 import React, { useEffect, createContext, useState, useContext, ReactNode } from 'react';
 import { Status } from './types';
 
@@ -7,18 +6,37 @@ interface CatContextType {
   status: Status;
   stage: string;
   onAction: (action: string) => void;
+  reset: () => void;
 }
 
 const CatContext = createContext<CatContextType | undefined>(undefined);
 
 // set up provider
 export function CatProvider({ children }: { children: ReactNode }) {
-  const [status, setStatus] = useState<Status>({
+  const defaultStatus: Status = {
     hunger: 50,
     weight: 50,
-    anger: 50
-  });
-  const [stage, setStage] = useState("kitten");
+    anger: 50,
+  };
+  const defaultStage = "kitten";
+
+
+  const [status, setStatus] = useState<Status>(defaultStatus);
+  const [stage, setStage] = useState(defaultStage);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedStatus = localStorage.getItem("catStatus");
+      const savedStage = localStorage.getItem("catStage");
+
+      if (savedStatus) setStatus(JSON.parse(savedStatus));
+      if (savedStage) setStage(savedStage);
+
+      setIsMounted(true); // Mark that the component has mounted
+    }
+  }, []);
+
 
   // function for each action (clicking button)
   const onAction = (action: string) => {
@@ -43,6 +61,22 @@ export function CatProvider({ children }: { children: ReactNode }) {
       return newStatus;
     });
   };
+
+  const reset = () => {
+    setStatus(defaultStatus);
+    setStage(defaultStage);
+    if (isMounted) {
+      localStorage.setItem("catStatus", JSON.stringify(defaultStatus));
+      localStorage.setItem("catStage", defaultStage);
+    }
+  }
+
+  useEffect(() => {
+    if (isMounted) {
+      localStorage.setItem("catStatus", JSON.stringify(status));
+      localStorage.setItem("catStage", stage);
+    }
+  }, [status, stage, isMounted]);
 
    // TODO: we can check if this is how we want growth stage to work exactly
   useEffect(() => {
@@ -85,11 +119,11 @@ export function CatProvider({ children }: { children: ReactNode }) {
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <CatContext.Provider value={{ status, stage, onAction }}>
+  return isMounted ? (
+    <CatContext.Provider value={{ status, stage, onAction, reset }}>
       {children}
     </CatContext.Provider>
-  );
+  ) : null;
 }
 
 // helper for easily accessing cat context
